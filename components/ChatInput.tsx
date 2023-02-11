@@ -19,9 +19,9 @@ function ChatInput({chatId}:Props) {
   const [prompt, setPrompt] = useState("")
   const { data:session } = useSession()
 
-  const { data:model} = useSWR('models',{
+  const { data:model} = useSWR('model',{
     fallbackData: 'text-davinci-003'
-})
+  })
 
   // const model = "text-davinci-003";
 
@@ -47,8 +47,9 @@ function ChatInput({chatId}:Props) {
       db, 'users', session?.user?.email!, 'chats', chatId, 'messages'
       ), message)
 
-  const notification = toast.loading("ChatGPT is thinking...")
-
+      const notification = toast.loading("ChatGPT is thinking...")
+      console.log(model);
+      
     await fetch('/api/askQuestion', {
       method: 'POST',
       headers: {
